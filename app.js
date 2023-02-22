@@ -25,12 +25,18 @@ app.get('/api/v1/tours/', (req, res) => {
 // get request to get specific tour
 app.get('/api/v1/tours/:id', (req, res) => {
   console.log(req.params);
+  const tour = tours.find((el) => el.id === id);
 
   // convert string id to a number
   const id = req.params.id * 1;
 
-  // match id from parameters to tour id
-  const tour = tours.find((el) => el.id === id);
+  // send error message if tour id cannot be found
+  if (!tour) {
+    return res.status(404).json({
+      status: 'failed',
+      message: 'Invalid ID',
+    });
+  }
 
   res.status(200).json({
     status: 'success',
