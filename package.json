@@ -1,0 +1,27 @@
+{
+  "name": "node-natours",
+  "version": "1.0.0",
+  "description": "Nature tour booking app written in NodeJS, Express & MongoDB. ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LoryGlory/node-natours.git"
+  },
+  "keywords": [
+    "node",
+    "mongodb",
+    "express"
+  ],
+  "author": "Laura Roganovic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LoryGlory/node-natours/issues"
+  },
+  "homepage": "https://github.com/LoryGlory/node-natours#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
