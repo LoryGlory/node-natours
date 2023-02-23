@@ -6,6 +6,16 @@ const port = 3000;
 // middleware to modify incoming request data
 app.use(express.json());
 
+app.use((req, res, next) => {
+  console.log('Hello from the middle ware!');
+  next();
+});
+
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
+
 // read data from file
 const tours = JSON.parse(
   fs.readFileSync(
@@ -16,7 +26,9 @@ const tours = JSON.parse(
 
 // get all tours function
 const getAllTours = (req, res) => {
+  console.log(req.requestTime);
   res.status(200).json({
+    requestedAt: req.requestTime,
     status: 'success',
     results: tours.length,
     data: {
@@ -122,6 +134,7 @@ const deleteTour = (req, res) => {
 // app.delete('/api/v1/tours/:id', deleteTour);
 
 // NEW VARIANT: chaining methods for all tours and specific tours
+// route handlers
 app
   .route('/api/v1/tours/')
   .get(getAllTours)
