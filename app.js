@@ -8,11 +8,14 @@ app.use(express.json());
 
 // read data from file
 const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`, 'utf-8')
+  fs.readFileSync(
+    `${__dirname}/dev-data/data/tours-simple.json`,
+    'utf-8'
+  )
 );
 
-// get request to get all tours
-app.get('/api/v1/tours/', (req, res) => {
+// get all tours function
+const getAllTours = (req, res) => {
   res.status(200).json({
     status: 'success',
     results: tours.length,
@@ -20,10 +23,10 @@ app.get('/api/v1/tours/', (req, res) => {
       tours,
     },
   });
-});
+};
 
-// get request to get specific tour
-app.get('/api/v1/tours/:id', (req, res) => {
+// function to get specific tour
+const getTour = (req, res) => {
   console.log(req.params);
   const tour = tours.find((el) => el.id === id);
 
@@ -44,10 +47,10 @@ app.get('/api/v1/tours/:id', (req, res) => {
       tour,
     },
   });
-});
+};
 
-// post request to add a new tour
-app.post('/api/v1/tours', (req, res) => {
+// function to create Tour
+const createTour = (req, res) => {
   // console.log(req.body);
   // add new tour with id + 1 and request body as tour content
   const newId = tours[tours.length - 1].id + 1;
@@ -68,9 +71,9 @@ app.post('/api/v1/tours', (req, res) => {
       });
     }
   );
-});
+};
 
-app.patch('/api/v1/tours/:id', (req, res) => {
+const updateTour = (req, res) => {
   // send error message if tour id cannot be found
   if (req.params.id * 1 > tours.length) {
     return res.status(404).json({
@@ -85,10 +88,10 @@ app.patch('/api/v1/tours/:id', (req, res) => {
       tour: '<Updated Tour here...>',
     },
   });
-});
+};
 
-// delete tour
-app.delete('/api/v1/tours/:id', (req, res) => {
+// function to delete tour
+const deleteTour = (req, res) => {
   if (req.params.id * 1 > tours.length) {
     return res.status(404).json({
       status: 'fail',
@@ -100,7 +103,35 @@ app.delete('/api/v1/tours/:id', (req, res) => {
     status: 'success',
     data: null,
   });
-});
+};
+
+// OLD VARIANT
+// get request & call to get all tours function
+// app.get('/api/v1/tours', getAllTours);
+
+// get request & call get specific tour function
+// app.get('/api/v1/tours/:id', getTour);
+
+// post request & call add new tour function
+// app.post('/api/v1/tours', createTour);
+
+// patch request & call update tour function
+// app.patch('/api/v1/tours/:id', updateTour);
+
+// delete tour request & call delete Tour function
+// app.delete('/api/v1/tours/:id', deleteTour);
+
+// NEW VARIANT: chaining methods for all tours and specific tours
+app
+  .route('/api/v1/tours/')
+  .get(getAllTours)
+  .post(createTour);
+
+app
+  .route('/api/v1/tours/:id')
+  .get(getTour)
+  .patch(updateTour)
+  .delete(deleteTour);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}`);
