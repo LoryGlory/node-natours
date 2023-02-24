@@ -4,6 +4,7 @@ const tourController = require('./../controllers/tourController');
 
 const router = express.Router();
 
+// middleware call to check id
 //prettier-ignore
 router.param('id', tourController.checkID);
 
@@ -11,7 +12,7 @@ router.param('id', tourController.checkID);
 router
   .route('/')
   .get(tourController.getAllTours)
-  .post(tourController.createTour);
+  .post(tourController.checkBody, tourController.createTour);
 
 router
   .route('/:id')
