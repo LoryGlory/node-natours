@@ -4,7 +4,9 @@ const tourController = require('./../controllers/tourController');
 
 const router = express.Router();
 
-//route to mini application tourRoutes
+//prettier-ignore
+router.param('id', tourController.checkID);
+
 // prettier-ignore
 router
   .route('/')
