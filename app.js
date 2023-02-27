@@ -5,8 +5,11 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 
 // middleware to modify incoming request data
-// http request logger
-app.use(morgan('dev'));
+// http request logger running only when in dev environment
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
 app.use(express.json());
 // use middleware to serve static files, setting public as root
 app.use(express.static(`${__dirname}/public`));
