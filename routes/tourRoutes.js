@@ -1,12 +1,11 @@
 // route handlers
 const express = require('express');
-const tourController = require('./../controllers/tourController');
+const tourController = require('../controllers/tourController');
 
 const router = express.Router();
 
 // middleware call to check id
-//prettier-ignore
-router.param('id', tourController.checkID);
+// router.param('id', tourController.checkID);
 
 // prettier-ignore
 router
