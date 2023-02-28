@@ -16,10 +16,27 @@ mongoose.connect(DB, () => {
   );
 });
 
-const port = process.env.PORT || 3000;
+// mongoose schema for tour model
+const tourSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'A tour must have a name'],
+    unique: true,
+  },
+  rating: {
+    type: Number,
+    default: 4.5,
+  },
+  price: {
+    type: Number,
+    required: [true, 'A tour must have a price'],
+  },
+});
 
-// get environment where we're in
-// console.log(process.env);
+// Tour model
+const Tour = mongoose.model('Tour', tourSchema);
+
+const port = process.env.PORT || 3000;
 
 //start server
 app.listen(port, () => {
