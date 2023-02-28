@@ -3,9 +3,22 @@ const Tour = require('../models/tourModel');
 // get all tours function
 exports.getAllTours = async (req, res) => {
   try {
-    // use find method to return all tour documents
-    const tours = await Tour.find();
+    // build query
+    const queryObj = { ...req.query };
+    const excludedFields = [
+      'page',
+      'sort',
+      'limit',
+      'fields',
+    ];
 
+    // exclude fields from query object
+    excludedFields.forEach((el) => delete queryObj[el]);
+
+    // execute query, return all tour documents depending on parameters
+    const query = Tour.find(queryObj);
+
+    const tours = await query;
     res.status(200).json({
       requestedAt: req.requestTime,
       status: 'success',
