@@ -15,6 +15,11 @@ router
     tourController.getAllTours
   );
 
+// return tour stats when route is /tour-stats
+router
+  .route('/tour-stats')
+  .get(tourController.getTourStats);
+
 // prettier-ignore
 router
   .route('/')
