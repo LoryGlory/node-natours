@@ -7,6 +7,14 @@ const router = express.Router();
 // middleware call to check id
 // router.param('id', tourController.checkID);
 
+// return top 5 tours when route is /top-5-cheap
+router
+  .route('/top-5-cheap')
+  .get(
+    tourController.aliasTopTours,
+    tourController.getAllTours
+  );
+
 // prettier-ignore
 router
   .route('/')
