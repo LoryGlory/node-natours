@@ -122,7 +122,7 @@ exports.deleteTour = async (req, res) => {
 // calculate stats for tours
 exports.getTourStats = async (req, res) => {
   try {
-    // mongoDB aggregation pipeline
+    // mongoDB aggregation pipeline for matching & grouping
     const stats = await Tour.aggregate([
       {
         $match: { ratingsAverage: { $gte: 4.5 } },
