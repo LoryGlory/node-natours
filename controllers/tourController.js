@@ -1,5 +1,14 @@
 const Tour = require('../models/tourModel');
 
+// default top tours sorted by highest average rating and price
+exports.aliasTopTours = (req, res, next) => {
+  req.query.limit = '5';
+  req.query.sort = '-ratingsAverage,price';
+  req.query.fields =
+    'name,price,ratingsAverage,summary,difficulty';
+  next();
+};
+
 // get all tours function
 exports.getAllTours = async (req, res) => {
   try {
