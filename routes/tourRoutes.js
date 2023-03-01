@@ -10,13 +10,20 @@ const router = express.Router();
 // return top 5 tours when route is /top-5-cheap
 router
   .route('/top-5-cheap')
-  .get(tourController.aliasTopTours, tourController.getAllTours);
+  .get(
+    tourController.aliasTopTours,
+    tourController.getAllTours
+  );
 
 // return tour stats when route is /tour-stats
-router.route('/tour-stats').get(tourController.getTourStats);
+router
+  .route('/tour-stats')
+  .get(tourController.getTourStats);
 
 // return tour stats when route is /tour-stats
-router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
+router
+  .route('/monthly-plan/:year')
+  .get(tourController.getMonthlyPlan);
 
 router
   .route('/')
