@@ -61,6 +61,10 @@ const tourSchema = new mongoose.Schema(
       select: false,
     },
     startDates: [Date],
+    secretTour: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     // display virtual properties
@@ -77,7 +81,24 @@ tourSchema.virtual('durationWeeks').get(function () {
 
 // run document middleware before .save() and .create() command
 tourSchema.pre('save', function (next) {
+  // this = current document
   this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+// run query middleware before .find(), .findOne etc command
+tourSchema.pre(/^find/, function (next) {
+  // this = current query
+  this.find({ secretTour: { $ne: true } });
+  this.start = Date.now();
+  next();
+});
+
+tourSchema.post(/^find/, function (docs, next) {
+  console.log(docs);
+  console.log(
+    `Query took ${Date.now() - this.start} milliseconds`
+  );
   next();
 });
 
