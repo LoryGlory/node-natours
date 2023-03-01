@@ -9,8 +9,8 @@ exports.getAllTours = async (req, res) => {
     const queryObj = { ...req.query };
     const excludedFields = [
       'page',
-      'sort',
       'limit',
+      'sort',
       'fields',
     ];
 
@@ -23,10 +23,18 @@ exports.getAllTours = async (req, res) => {
       /\b(gte|gt|lte|lt)\b/g,
       (match) => `$${match}`
     );
-    console.log(JSON.parse(queryStr));
 
     // execute query, return all tour documents depending on parameters
-    const query = Tour.find(JSON.parse(queryStr));
+    let query = Tour.find(JSON.parse(queryStr));
+
+    // sorting
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort('-createdAt');
+    }
+
     const tours = await query;
 
     res.status(200).json({
