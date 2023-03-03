@@ -45,7 +45,9 @@ userSchema.pre('save', async function (next) {
 
   // set current password to the encrypted password with cost of 12
   this.password = await bcrypt.hash(this.password, 12);
-  this.passwordConfirm = undefined; // set confirmed password to undefined, so it doesn't persist in db
+
+  // set confirmed password to undefined, so it doesn't persist in db
+  this.passwordConfirm = undefined;
   next();
 });
 
