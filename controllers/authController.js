@@ -12,7 +12,13 @@ const signToken = (id) => {
 
 exports.signup = catchAsync(async (req, res, next) => {
   // define data stored in User object (cannot add roles etc.)
-  const newUser = await User.create(req.body);
+  const newUser = await User.create({
+    name: req.body.name,
+    email: req.body.email,
+    role: req.body.role,
+    password: req.body.password,
+    passwordConfirm: req.body.passwordConfirm,
+  });
   const token = signToken(newUser._id);
 
   res.status(201).json({
@@ -20,10 +26,9 @@ exports.signup = catchAsync(async (req, res, next) => {
     token,
     data: {
       user: {
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        passwordConfirm: req.body.passwordConfirm,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
       },
     },
   });
@@ -119,3 +124,20 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = freshUser;
   next();
 });
+
+// (...roles) contains roles defined in tourRoutes.js, where we define which user roles have permission
+// restrict user roles for delete action
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    // only allow roles 'admin' and 'lead-guide', not 'user' etc.
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError(
+          'You do not have permission to perform this action',
+          403
+        )
+      );
+    }
+    next();
+  };
+};
