@@ -141,3 +141,37 @@ exports.restrictTo = (...roles) => {
     next();
   };
 };
+
+//
+exports.forgotPassword = catchAsync(
+  async (req, res, next) => {
+    // get user based on POST email
+    const user = await User.findOne({
+      email: req.body.email,
+    });
+
+    if (!user) {
+      return next(
+        new AppError(
+          'There is no user with email address',
+          404
+        )
+      );
+    }
+
+    // generate random token
+    const resetToken = user.createPasswordResetToken();
+    await user.save({ validateBeforeSave: false });
+
+    // send it back as an email
+
+    // next();
+
+    res.status(200).json({
+      status: 'success',
+      resetToken, // resetToken = await user.createResetPasswordToken();
+    });
+  }
+);
+
+exports.resetPassword = (req, res, next) => {};
