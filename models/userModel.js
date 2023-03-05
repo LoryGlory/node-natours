@@ -25,8 +25,7 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: {
-      values: ['user', 'guide', 'lead-guide'],
-      message: 'Role is either: user, guide or lead-guide',
+      values: ['user', 'guide', 'lead-guide', 'admin'],
     },
     default: 'user',
   },
@@ -65,6 +64,15 @@ userSchema.pre('save', async function (next) {
 
   // set confirmed password to undefined, so it doesn't persist in db
   this.passwordConfirm = undefined;
+  next();
+});
+
+// check if password has been modified
+userSchema.pre('save', function (next) {
+  if (!this.isModified('password') || this.isNew)
+    return next();
+
+  this.passwordChangedAt = Date.now();
   next();
 });
 
