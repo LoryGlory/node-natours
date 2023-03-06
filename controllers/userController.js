@@ -26,6 +26,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
   });
 });
 
+// function to change user data
 exports.updateMe = catchAsync(async (req, res, next) => {
   // create error if user posts password data
   if (req.body.password || req.body.passwordConfirm) {
@@ -55,6 +56,18 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     data: {
       user: updatedUser,
     },
+  });
+});
+
+// function to set user as inactive
+exports.deleteMe = catchAsync(async (req, res, next) => {
+  await User.findByIdAndUpdate(req.user.id, {
+    active: false,
+  });
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
   });
 });
 
