@@ -47,12 +47,14 @@ const userSchema = new mongoose.Schema({
       message: 'Passwords are not the same.',
     },
   },
-  passwordChangedAt: {
-    type: Date,
-    select: true,
-  },
+  passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
+  active: {
+    type: Boolean,
+    default: true,
+    select: false,
+  },
 });
 
 userSchema.pre('save', async function (next) {
@@ -64,6 +66,12 @@ userSchema.pre('save', async function (next) {
 
   // set confirmed password to undefined, so it doesn't persist in db
   this.passwordConfirm = undefined;
+  next();
+});
+
+// check if user is active
+userSchema.pre(/^find/, function (next) {
+  this.find({ active: { $ne: false } });
   next();
 });
 
