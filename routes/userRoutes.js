@@ -11,20 +11,32 @@ router.post(
   '/forgotPassword',
   authController.forgotPassword
 );
+
+// reset password route
 router.patch(
   '/resetPassword/:token',
   authController.resetPassword
 );
+
+// change password route
 router.patch(
   '/updateMyPassword',
   authController.protect,
   authController.updatePassword
 );
 
+// route to change user data
 router.patch(
   '/updateMe',
   authController.protect,
   userController.updateMe
+);
+
+// route to set user as inactive
+router.delete(
+  '/deleteMe',
+  authController.protect,
+  userController.deleteMe
 );
 
 //user routes
