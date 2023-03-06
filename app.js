@@ -1,11 +1,16 @@
 const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+
 const app = express();
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
+
+// helmet middleware function, set security http headers
+app.use(helmet());
 
 // middleware to modify incoming request data
 // http request logger running only when in dev environment
@@ -22,7 +27,9 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-app.use(express.json());
+// body parser (read data from body into req.body)
+app.use(express.json({ limit: '10kb' }));
+
 // use middleware to serve static files, setting public as root
 app.use(express.static(`${__dirname}/public`));
 
