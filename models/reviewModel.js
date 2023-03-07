@@ -38,6 +38,21 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
+// populate query with guides fields
+reviewSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'user',
+    select: 'name photo',
+  });
+
+  this.populate({
+    path: 'tour',
+    select: 'name',
+  });
+
+  next();
+});
+
 // Review model
 const Review = mongoose.model('Review', reviewSchema);
 
