@@ -2,6 +2,7 @@ const Tour = require('../models/tourModel');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const factory = require('./handlerFactory');
 
 // default top tours sorted by highest average rating and price
 exports.aliasTopTours = (req, res, next) => {
@@ -92,21 +93,24 @@ exports.updateTour = catchAsync(async (req, res, next) => {
   });
 });
 
+// function to delete tour with refactored code
+exports.deleteTour = factory.deleteOne(Tour);
+
 // function to delete tour
-exports.deleteTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findByIdAndDelete(req.params.id);
-
-  if (!tour) {
-    return next(
-      new AppError('No tour found with that ID', 404)
-    );
-  }
-
-  res.status(204).json({
-    status: 'success',
-    data: null,
-  });
-});
+// exports.deleteTour = catchAsync(async (req, res, next) => {
+//   const tour = await Tour.findByIdAndDelete(req.params.id);
+//
+//   if (!tour) {
+//     return next(
+//       new AppError('No tour found with that ID', 404)
+//     );
+//   }
+//
+//   res.status(204).json({
+//     status: 'success',
+//     data: null,
+//   });
+// });
 
 // calculate stats for tours
 exports.getTourStats = catchAsync(

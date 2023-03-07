@@ -7,6 +7,7 @@ const router = express.Router({
   mergeParams: true,
 });
 
+// route to get reviews
 router
   .route('/')
   .get(reviewController.getAllReviews)
@@ -15,5 +16,8 @@ router
     authController.restrictTo('user'),
     reviewController.createReview
   );
+
+// route to delete reviews
+router.route('/:id').delete(reviewController.deleteReview);
 
 module.exports = router;
