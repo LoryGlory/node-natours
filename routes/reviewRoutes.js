@@ -2,7 +2,10 @@ const express = require('express');
 const reviewController = require('../controllers/reviewController');
 const authController = require('../controllers/authController');
 
-const router = express.Router();
+// add option to merge params, enabling parameters in other routers to merge
+const router = express.Router({
+  mergeParams: true,
+});
 
 router
   .route('/')
