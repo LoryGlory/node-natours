@@ -137,7 +137,7 @@ tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7; // calculate duration in weeks
 });
 
-// virtual populate / connect
+// virtual populate / keeping a reference to the child document from the parent document, but without persisting the information to the database
 tourSchema.virtual('reviews', {
   ref: 'Review',
   foreignField: 'tour',
