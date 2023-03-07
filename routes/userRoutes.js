@@ -25,6 +25,14 @@ router.patch(
   authController.updatePassword
 );
 
+// route to get current user
+router.get(
+  '/me',
+  authController.protect,
+  userController.getMe,
+  userController.getUser
+);
+
 // route to change user data
 router.patch(
   '/updateMe',
