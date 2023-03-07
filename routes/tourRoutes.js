@@ -32,7 +32,7 @@ router
 router
   .route('/')
   .get(authController.protect, tourController.getAllTours)
-  .post(tourController.createTour);
+  .post(tourController.createOne);
 
 router
   .route('/:id')
