@@ -1,6 +1,7 @@
 // function to delete tour
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const Tour = require('../models/tourModel');
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
@@ -40,6 +41,18 @@ exports.updateOne = (Model) =>
       status: 'success',
       data: {
         document,
+      },
+    });
+  });
+
+exports.createOne = (Model) =>
+  catchAsync(async (req, res, next) => {
+    const newDocument = await Model.create(req.body);
+
+    res.status(201).json({
+      status: 'success',
+      data: {
+        document: newDocument,
       },
     });
   });
