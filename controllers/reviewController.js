@@ -26,6 +26,13 @@ exports.getAllReviews = catchAsync(
 // create new review
 exports.createReview = catchAsync(
   async (req, res, next) => {
+    //nested routes
+    // define tour id as the one coming in from the url if no tour id exists in request body
+    if (!req.body.tour) req.body.tour = req.params.tourId;
+
+    // define user id as the one coming in from the url if no user id exists in request body
+    if (!req.body.user) req.body.user = req.user.id;
+
     const newReview = await Review.create(req.body);
 
     res.status(201).json({
