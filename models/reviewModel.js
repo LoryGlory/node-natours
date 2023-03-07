@@ -38,7 +38,7 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
-// Tour model
+// Review model
 const Review = mongoose.model('Review', reviewSchema);
 
 module.exports = Review;
