@@ -1,7 +1,5 @@
 const Tour = require('../models/tourModel');
-const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
 
 // default top tours sorted by highest average rating and price
@@ -14,47 +12,10 @@ exports.aliasTopTours = (req, res, next) => {
 };
 
 // get all tours function
-exports.getAllTours = catchAsync(async (req, res, next) => {
-  console.log(req.query);
+exports.getAllTours = factory.getAll(Tour);
 
-  // save final query results to tours variable
-  const features = new APIFeatures(Tour.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
-
-  const tours = await features.query;
-
-  res.status(200).json({
-    requestedAt: req.requestTime,
-    status: 'success',
-    results: tours.length,
-    data: {
-      tours,
-    },
-  });
-});
-
-// function to get specific tour
-exports.getTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id).populate(
-    'reviews'
-  );
-
-  if (!tour) {
-    return next(
-      new AppError('No tour found with that ID', 404)
-    );
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      tour,
-    },
-  });
-});
+// get tour and populate conditionally with reviews or not
+exports.getTour = factory.getOne(Tour, { path: 'reviews' });
 
 // function to create tour
 exports.createOne = factory.createOne(Tour);
@@ -197,5 +158,26 @@ exports.getMonthlyPlan = catchAsync(
 //   res.status(204).json({
 //     status: 'success',
 //     data: null,
+//   });
+// });
+
+// old function to get tour
+// function to get specific tour
+// exports.getTour = catchAsync(async (req, res, next) => {
+//   const tour = await Tour.findById(req.params.id).populate(
+//     'reviews'
+//   );
+//
+//   if (!tour) {
+//     return next(
+//       new AppError('No tour found with that ID', 404)
+//     );
+//   }
+//
+//   res.status(200).json({
+//     status: 'success',
+//     data: {
+//       tour,
+//     },
 //   });
 // });
