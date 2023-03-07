@@ -70,30 +70,34 @@ exports.createTour = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    {
-      new: true,
-    }
-  );
+//function to update tour
+exports.updateTour = factory.updateOne(Tour);
 
-  if (!tour) {
-    return next(
-      new AppError('No tour found with that ID', 404)
-    );
-  }
+// old function to update tour
+// exports.updateTour = catchAsync(async (req, res, next) => {
+//   const tour = await Tour.findByIdAndUpdate(
+//     req.params.id,
+//     req.body,
+//     {
+//       new: true,
+//     }
+//   );
+//
+//   if (!tour) {
+//     return next(
+//       new AppError('No tour found with that ID', 404)
+//     );
+//   }
+//
+//   res.status(200).json({
+//     status: 'success',
+//     data: {
+//       tour,
+//     },
+//   });
+// });
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      tour,
-    },
-  });
-});
-
-// function to delete tour with refactored code
+// old function to delete tour with refactored code
 exports.deleteTour = factory.deleteOne(Tour);
 
 // function to delete tour
