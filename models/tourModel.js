@@ -195,13 +195,13 @@ tourSchema.post(/^find/, function (docs, next) {
 });
 
 // run aggregation middleware before aggregate hook
-tourSchema.pre('aggregate', function (next) {
-  this.pipeline().unshift({
-    $match: { secretTour: { $ne: true } }, // hide secret tours
-  });
-  console.log(this.pipeline()); // array we pass into aggregate function in tourController
-  next();
-});
+// tourSchema.pre('aggregate', function (next) {
+//   this.pipeline().unshift({
+//     $match: { secretTour: { $ne: true } }, // hide secret tours
+//   });
+//   console.log(this.pipeline()); // array we pass into aggregate function in tourController
+//   next();
+// });
 
 // Tour model
 const Tour = mongoose.model('Tour', tourSchema);
