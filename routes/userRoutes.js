@@ -18,34 +18,27 @@ router.patch(
   authController.resetPassword
 );
 
+// protect all routes below
+router.use(authController.protect);
+
 // change password route
 router.patch(
   '/updateMyPassword',
-  authController.protect,
   authController.updatePassword
 );
 
 // route to get current user
 router.get(
   '/me',
-  authController.protect,
   userController.getMe,
   userController.getUser
 );
 
 // route to change user data
-router.patch(
-  '/updateMe',
-  authController.protect,
-  userController.updateMe
-);
+router.patch('/updateMe', userController.updateMe);
 
 // route to set user as inactive
-router.delete(
-  '/deleteMe',
-  authController.protect,
-  userController.deleteMe
-);
+router.delete('/deleteMe', userController.deleteMe);
 
 //user routes
 router
