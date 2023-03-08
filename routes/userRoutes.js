@@ -40,6 +40,9 @@ router.patch('/updateMe', userController.updateMe);
 // route to set user as inactive
 router.delete('/deleteMe', userController.deleteMe);
 
+// restrict route access below to admins
+router.use(authController.restrictTo('admin'));
+
 //user routes
 router
   .route('/')
