@@ -152,7 +152,7 @@ exports.getDistances = catchAsync(
     if (!lat || !lng) {
       next(
         new AppError(
-          'Please provide latitutr and longitude in the format lat,lng.',
+          'Please provide latitute and longitude in the format lat,lng.',
           400
         )
       );
