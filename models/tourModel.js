@@ -131,6 +131,9 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
+// sort the price index in ascending order
+tourSchema.index({ price: 1 });
+
 // create virtual property for duration in weeks
 tourSchema.virtual('durationWeeks').get(function () {
   // use normal function because of this keyword
