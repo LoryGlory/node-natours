@@ -5,7 +5,8 @@ export const displayMap = (locations) => {
 
   const map = new mapboxgl.Map({
     container: 'map', // container ID
-    style: 'mapbox://styles/mapbox/streets-v12', // style URL
+    style:
+      'mapbox://styles/loryglory/clf2wh9ln001p01mybaoxmnnv', // style URL
     center: [-74.5, 40], // starting position [lng, lat]
     zoom: 9, // starting zoom
   });
