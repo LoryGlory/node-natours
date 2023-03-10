@@ -2,3 +2,4 @@
 .idea
 /dev-data/data/tours-simple.json
 config.env
+.cache
