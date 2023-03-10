@@ -37,6 +37,7 @@
     "express-rate-limit": "^6.7.0",
     "helmet": "^3.23.3",
     "hpp": "^0.2.3",
+    "html-to-text": "^9.0.4",
     "jsonwebtoken": "^9.0.0",
     "mapbox-gl": "^2.13.0",
     "mongoose": "^6.10.0",
@@ -57,7 +58,7 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-react": "^7.32.2",
-    "prettier": "^2.8.4",
-    "parcel-bundler": "^1.12.3"
+    "parcel-bundler": "^1.12.3",
+    "prettier": "^2.8.4"
   }
 }
