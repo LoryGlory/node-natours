@@ -92,6 +92,16 @@ exports.login = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res);
 });
 
+exports.logout = (req, res) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({
+    status: 'success',
+  });
+};
+
 exports.protect = catchAsync(async (req, res, next) => {
   // get token, check if it exists
   let token;
@@ -100,6 +110,8 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
 
   if (!token) {
@@ -118,29 +130,29 @@ exports.protect = catchAsync(async (req, res, next) => {
   );
 
   // check if user still exists
-  const freshUser = await User.findById(decoded.id);
-
-  if (!freshUser) {
+  const currentUser = await User.findById(decoded.id);
+  if (!currentUser) {
     return next(
       new AppError(
-        'The user belonging to this token does no longer exist.'
-      ),
-      401
-    );
-  }
-
-  // check if user changed password after the token was issued
-  if (freshUser.changedPasswordAfter(decoded.iat)) {
-    return next(
-      new AppError(
-        'User recently changed password! Please log in again!',
+        'The user belonging to this token does no longer exist.',
         401
       )
     );
   }
 
-  // grant access to protected route
-  req.user = freshUser;
+  // 4) Check if user changed password after the token was issued
+  if (currentUser.changedPasswordAfter(decoded.iat)) {
+    return next(
+      new AppError(
+        'User recently changed password! Please log in again.',
+        401
+      )
+    );
+  }
+
+  // GRANT ACCESS TO PROTECTED ROUTE
+  req.user = currentUser;
+  res.locals.user = currentUser;
   next();
 });
 
