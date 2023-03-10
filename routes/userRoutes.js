@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require('multer');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 
@@ -36,7 +37,11 @@ router.get(
 );
 
 // route to change user data
-router.patch('/updateMe', userController.updateMe);
+router.patch(
+  '/updateMe',
+  userController.uploadUserPhoto,
+  userController.updateMe
+);
 
 // route to set user as inactive
 router.delete('/deleteMe', userController.deleteMe);
