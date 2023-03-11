@@ -4,12 +4,10 @@
   "description": "Nature tour booking app written in NodeJS, Express & MongoDB. ",
   "main": "app.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
-    "start:prod": "NODE_ENV=production nodemon server.js",
+    "start:prod": "SET NODE_ENV=production&&nodemon server.js",
     "start:dev": "NODE_ENV=dev nodemon server.js",
-    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url ./public/js",
-    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url ./public/js"
+    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url .",
+    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url ."
   },
   "repository": {
     "type": "git",
@@ -46,14 +44,12 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.1",
     "nodemailer": "^6.9.1",
-    "parcel": "^2.8.3",
     "pug": "^3.0.2",
     "sharp": "^0.31.3",
     "slugify": "^1.6.5",
     "stripe": "^11.14.0",
     "validator": "^13.9.0",
-    "xss-clean": "^0.1.1",
-    "parcel-bundler": "^1.12.3"
+    "xss-clean": "^0.1.1"
   },
   "devDependencies": {
     "eslint": "^8.35.0",
@@ -63,7 +59,7 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-react": "^7.32.2",
-    "parcel-bundler": "^1.12.3",
+    "parcel-bundler": "^1.12.5",
     "prettier": "^2.8.4"
   }
 }
