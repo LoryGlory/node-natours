@@ -13,7 +13,7 @@ router.get(
 );
 
 router.use(
-  authController.restrictTo('admin', 'lead-guide')
+  authController.restrictTo('admin', 'leagit d-guide')
 );
 router
   .route('/')
