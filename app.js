@@ -28,6 +28,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Set security HTTP headers
 // app.use(helmet());
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     directives: {
+//       defaultSrc: ["'self'"],
+//       baseUri: ["'self'"],
+//       fontSrc: ["'self'", 'https:', 'data:'],
+//       scriptSrc: [
+//         "'self'",
+//         'https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js',
+//       ],
+//       objectSrc: ["'none'"],
+//       styleSrc: ["'self'", 'https:', 'unsafe-inline'],
+//       upgradeInsecureRequests: [],
+//     },
+//   })
+// );
 
 // Development logging
 if (process.env.NODE_ENV === 'development') {

@@ -2,6 +2,7 @@
 .idea
 /dev-data/data/tours-simple.json
 config.env
-.cache
+.parcel-cache
 /public/js/bundle.js
 /public/js/bundle.js.map
+/public/js/bundled
